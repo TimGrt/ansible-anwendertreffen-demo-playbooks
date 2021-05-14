@@ -3,25 +3,25 @@
 - name: Create Dashboard deployment
   community.kubernetes.k8s:
     src: dashboard-deployment.yml
-    kubeconfig: "{{ playbook_dir }}/.kube-config"
+    kubeconfig: "/tmp/.kube-config"
     state: present
 
 - name: Deploy Dashboard Service Account manifest
   community.kubernetes.k8s:
     src: service-account.yml
-    kubeconfig: "{{ playbook_dir }}/.kube-config"
+    kubeconfig: "/tmp/.kube-config"
     state: present
 
 - name: Deploy Dashboard Cluster Role binding manifest
   community.kubernetes.k8s:
     src: cluster-role-binding.yml
-    kubeconfig: "{{ playbook_dir }}/.kube-config"
+    kubeconfig: "/tmp/.kube-config"
     state: present
 
 - name: Expose Dashboard with Node Port Service
   community.kubernetes.k8s:
     src: service-node-port.yml
-    kubeconfig: "{{ playbook_dir }}/.kube-config"
+    kubeconfig: "/tmp/.kube-config"
     state: present
 
 - name: Get Port for Kubernetes Dashboard
@@ -31,7 +31,7 @@
     name: kubernetes-dashboard
     namespace: kubernetes-dashboard
     field_selectors: metadata.spec
-    kubeconfig: "{{ playbook_dir }}/.kube-config"
+    kubeconfig: "/tmp/.kube-config"
   register: dashboard_service
 
 - name: Kubernetes Dashboard Port
@@ -43,7 +43,7 @@
     api_version: v1
     kind: Secret
     namespace: kubernetes-dashboard
-    kubeconfig: "{{ playbook_dir }}/.kube-config"
+    kubeconfig: "/tmp/.kube-config"
   register: dashboard_token
 
 - name: Output decoded Bearer Token

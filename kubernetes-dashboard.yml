@@ -20,7 +20,7 @@
     - name: Write kube config file content to localhost
       copy:
         content: "{{ kubeconfig['content'] | b64decode }}"
-        dest: "{{ playbook_dir }}/.kubeconfig"
+        dest: "/tmp/.kube-config"
       delegate_to: localhost
         
 - name: Deploy Kubernetes Dashboard
