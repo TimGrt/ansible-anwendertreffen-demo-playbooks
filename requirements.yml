@@ -1,0 +1,6 @@
+---
+# Ansible Collections used for k3s installation and Kubernetes Dashboard deployment
+collections:
+  - name: community.general
+  - name: ansible.posix
+  - name: community.kubernetes

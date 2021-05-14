@@ -1,2 +1,2 @@
-# ansible-anwendertreffen-demo-playbooks
-Playbooks for Ansible Anwendertreffen Demo
+# Ansible-Anwendertreffen-Demo
+Demo for Ansible Anwendertreffen

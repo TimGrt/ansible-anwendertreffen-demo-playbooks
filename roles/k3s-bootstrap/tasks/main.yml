@@ -1,0 +1,6 @@
+---
+
+- import_tasks: prerequisites.yml
+- import_tasks: download-binary.yml
+- import_tasks: firewalld.yml
+- import_tasks: motd.yml

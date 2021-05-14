@@ -1,0 +1,31 @@
+---
+
+- name: Show k3s cluster members
+  hosts: rpi
+  vars:
+    ip_address_netmask: "{{ ansible_default_ipv4.address }}/{{ ansible_default_ipv4.netmask }}"
+  tasks:
+    - name: Output network address in CIDR notation
+      ansible.builtin.debug:
+        msg: "{{ ip_address_netmask | ansible.netcommon.ipaddr('network/prefix') }}"
+
+- name: Ensure Kubernetes cluster administration
+  hosts: kubemaster
+  tasks:
+    - name: Get kube config file
+      ansible.builtin.slurp:
+        src: ~/.kube/config
+      register: kubeconfig
+
+    - name: Write kube config file content to localhost
+      copy:
+        content: "{{ kubeconfig['content'] | b64decode }}"
+        dest: "{{ playbook_dir }}/.kubeconfig"
+      delegate_to: localhost
+        
+- name: Deploy Kubernetes Dashboard
+  hosts: localhost
+  roles:
+    - kubernetes-dashboard
+  
+  
