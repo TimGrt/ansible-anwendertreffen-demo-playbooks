@@ -45,7 +45,16 @@
     namespace: kubernetes-dashboard
     kubeconfig: "/tmp/.kube-config"
   register: dashboard_token
+  tags:
+    - token
 
-- name: Output decoded Bearer Token
+- name: Output decoded Bearer Token for admin-user
   debug: 
-    msg: "{{ dashboard_token.resources[0].data.token | b64decode }}"
+    msg: "{{ item.data.token | b64decode }}"
+  loop: "{{ dashboard_token.resources }}"
+  loop_control:
+    label: "{{ item.metadata.name }}"
+  when: '"admin-user-token" in item.metadata.name'
+  tags:
+    - token
+  
