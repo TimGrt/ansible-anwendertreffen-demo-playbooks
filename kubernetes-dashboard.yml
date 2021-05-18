@@ -1,5 +1,7 @@
 ---
 
+# This play is used to demonstrate the need for providing the ansible.netcommon collection, as well as installing the required netaddr Python package.
+# It is not necessary to deploy the Kubernetes dashboard.
 - name: Show k3s cluster members
   hosts: rpi
   vars:
@@ -9,6 +11,8 @@
       ansible.builtin.debug:
         msg: "{{ ip_address_netmask | ansible.netcommon.ipaddr('network/prefix') }}"
 
+# This play is necessary to get the kube config file from the Kubernetes Master Node (Kubernetes Cluster must be provisioned)
+# The kube config file is used in the tasks of the subsequent play which need it to communite with the Kubernetes cluster.
 - name: Ensure Kubernetes cluster administration
   hosts: kubemaster
   tasks:
@@ -22,10 +26,8 @@
         content: "{{ kubeconfig['content'] | b64decode }}"
         dest: "/tmp/.kube-config"
       delegate_to: localhost
-        
+
 - name: Deploy Kubernetes Dashboard
   hosts: localhost
   roles:
     - kubernetes-dashboard
-  
-  

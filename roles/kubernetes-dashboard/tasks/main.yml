@@ -49,7 +49,7 @@
     - token
 
 - name: Output decoded Bearer Token for admin-user
-  debug: 
+  debug:
     msg: "{{ item.data.token | b64decode }}"
   loop: "{{ dashboard_token.resources }}"
   loop_control:
@@ -57,4 +57,3 @@
   when: '"admin-user-token" in item.metadata.name'
   tags:
     - token
-  

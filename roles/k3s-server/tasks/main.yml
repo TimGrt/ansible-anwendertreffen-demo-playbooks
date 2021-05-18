@@ -11,9 +11,9 @@
 - name: Enable and start K3s service
   systemd:
     name: k3s
-    daemon_reload: yes
+    daemon_reload: true
     state: started
-    enabled: yes
+    enabled: true
 
 - name: Wait for node-token
   wait_for:
@@ -29,8 +29,8 @@
   copy:
     src: /etc/rancher/k3s/k3s.yaml
     dest: ~{{ ansible_user }}/.kube/config
-    remote_src: yes
-    force: no
+    remote_src: true
+    force: false
     owner: "{{ ansible_user }}"
 
 - name: Replace localhost with IP of k3s server in kube config

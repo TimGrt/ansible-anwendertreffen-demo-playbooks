@@ -1,6 +1,3 @@
-[mgmt]
-ansible-master ansible_connection=local
-
 [kubemaster]
 rpi-cluster-host1 ansible_host=192.168.178.152
 
@@ -11,6 +8,6 @@ rpi-cluster-host2 ansible_host=192.168.178.153
 kubemaster
 kubeworker
 
-[all:vars]
+[rpi:vars]
 ansible_user=ansible
 ansible_ssh_private_key_file=~/.ssh/id_rsa
